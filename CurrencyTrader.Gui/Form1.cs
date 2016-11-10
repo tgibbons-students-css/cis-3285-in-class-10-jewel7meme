@@ -27,13 +27,15 @@ namespace CurrencyTrader.Gui
         {
             var tradeStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("SingleResponsibilityPrinciple.trades.txt");
             String tradeUrl = "http://faculty.css.edu/tgibbons/trades100.txt";
-
+            
             var logger = new ConsoleLogger();
             //var logger = new GuiLogger(lbStatus.Items);
 
             //var tradeDataProvider = new StreamTradeDataProvider(tradeStream);
             //var tradeDataProvider = new UrlTradeDataProvider(tradeUrl);
-            var tradeDataProvider = new AsynchUrlTradeDataProvider(tradeUrl);
+            
+            var tradeDataUpdate = new TradeDataUpdate(lbTradeLines.Items);
+            var tradeDataProvider = new AsynchUrlTradeDataProvider(tradeUrl, tradeDataUpdate);
             var tradeValidator = new SimpleTradeValidator(logger);
             var tradeMapper = new SimpleTradeMapper();
             var tradeParser = new SimpleTradeParser(tradeValidator, tradeMapper);
